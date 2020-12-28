@@ -5,7 +5,8 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "start": "npm run build && cross-env NODE_ENV=production node build/server.js",
+    "start": "node build/server.js",
+    "start:build": "npm run build && cross-env NODE_ENV=production node build/server.js",
     "dev": "cross-env NODE_ENV=development nodemon",
     "build": "tsc",
     "test": "jest --forceExit --detectOpenHandles",

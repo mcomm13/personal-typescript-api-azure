@@ -23,6 +23,8 @@ class App {
     this.port = process.env.PORT || 3000;
     this.env = process.env.NODE_ENV || 'development';
 
+    this.app.use(cors());
+
     this.connectToDatabase();
     this.initializeMiddlewares();
     this.initializeRoutes(routes);

@@ -4,4 +4,5 @@ export interface Blog {
   date: string;
   author: string;
   content: string;
+  youtubeUrl?: string;
 }

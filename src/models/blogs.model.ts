@@ -20,6 +20,10 @@ const blogSchema: Schema = new Schema({
     type: String,
     required: true,
   },
+  youtubeUrl: {
+    type: String,
+    required: false,
+  },
 });
 
 const blogModel = model<Blog & Document>('Blog', blogSchema, 'blog');

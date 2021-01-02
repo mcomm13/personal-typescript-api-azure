@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { Blog } from '../interfaces/blogs.interface';
 import blogService from '../services/blog.service';
 import { CreateBlogDto } from '../dtos/blogs.dto';
+import HttpException from '../exceptions/HttpException';
 
 class BlogsController {
   public blogService = new blogService();
@@ -28,8 +29,10 @@ class BlogsController {
 
   public createBlog = async (req: Request, res: Response, next: NextFunction) => {
     const blogData: CreateBlogDto = req.body;
+    const writeSecret = req.headers['write-secret'];
 
     try {
+      if (writeSecret !== process.env.WRITE_SECRET) throw new HttpException(400, `You're not allowed to do this!`);
       const createBlogData: Blog = await this.blogService.createBlog(blogData);
       res.status(201).json({ data: createBlogData, message: 'created' });
     } catch (error) {
@@ -40,8 +43,10 @@ class BlogsController {
   public updateBlog = async (req: Request, res: Response, next: NextFunction) => {
     const blogId: string = req.params.id;
     const blogData: Blog = req.body;
+    const writeSecret = req.headers['write-secret'];
 
     try {
+      if (writeSecret !== process.env.WRITE_SECRET) throw new HttpException(400, `You're not allowed to do this!`);
       const updateBlogData: Blog = await this.blogService.updateBlog(blogId, blogData);
       res.status(200).json({ data: updateBlogData, message: 'updated' });
     } catch (error) {
